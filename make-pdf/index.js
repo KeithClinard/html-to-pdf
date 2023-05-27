@@ -9,6 +9,7 @@ const startup = async () => {
       args: [
         // Required for Docker version of Puppeteer
         '--no-sandbox',
+        '--disable-gpu',
         '--disable-setuid-sandbox',
         '--disable-dev-shm-usage',
       ],
