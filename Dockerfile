@@ -1,4 +1,4 @@
-FROM node:14-slim
+FROM mcr.microsoft.com/azure-functions/node:4-node14
 
 RUN apt-get update \
     && apt-get install -y wget gnupg \
@@ -9,13 +9,12 @@ RUN apt-get update \
       --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /usr/src/app
+WORKDIR /home/site/wwwroot
+ENV AzureWebJobsScriptRoot=/home/site/wwwroot \
+    AzureFunctionsJobHost__Logging__Console__IsEnabled=true
 
 COPY package*.json ./
-COPY index.js ./
+COPY make-pdf/* ./make-pdf/
+COPY host.json ./
 
 RUN npm install
-
-EXPOSE 7071
-
-CMD [ "node", "index.js" ]
