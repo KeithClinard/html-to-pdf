@@ -1,13 +1,13 @@
 {
-  "name": "puppeteer",
+  "name": "html-to-pdf",
   "version": "1.0.0",
-  "main": "index.js",
+  "description": "",
   "license": "MIT",
+  "main": "make-pdf/index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "func start"
   },
   "dependencies": {
-    "express": "^4.17.2",
     "puppeteer": "^13.0.1"
   }
 }
