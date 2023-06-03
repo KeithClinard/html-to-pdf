@@ -2,13 +2,12 @@ const express = require("express");
 const puppeteer = require("puppeteer");
 const app = express();
 const bodyParser = require("body-parser");
+const authHandler = require("./auth.js");
 let browser;
 
-app.use(bodyParser.text({ type: "*/*", limit: "500mb" }));
+app.use(authHandler);
 
-app.get("/", async (req, res) => {
-  res.send("App is running");
-});
+app.use(bodyParser.text({ type: "*/*", limit: "500mb" }));
 
 app.post("/api/make-pdf", async (req, res) => {
   const body = req.body;
@@ -48,7 +47,7 @@ app.post("/api/make-pdf", async (req, res) => {
       timeout: 0,
     });
     await page.close();
-  
+
     res.set({
       "Content-Type": "application/pdf",
       "Content-Length": pdf.length,
@@ -73,7 +72,7 @@ const startup = async () => {
   });
   console.log(`Browser loaded`);
 
-  const PORT = 80;
+  const PORT = 8080;
   const HOST = "0.0.0.0";
 
   app.listen(PORT, HOST);
