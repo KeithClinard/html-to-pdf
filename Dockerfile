@@ -16,6 +16,6 @@ COPY index.js ./
 
 RUN npm install
 
-EXPOSE 7071
+EXPOSE 80
 
 CMD [ "node", "index.js" ]

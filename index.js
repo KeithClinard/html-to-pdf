@@ -6,6 +6,10 @@ let browser;
 
 app.use(bodyParser.text({ type: "*/*", limit: "500mb" }));
 
+app.get("/", async (req, res) => {
+  res.send("App is running");
+});
+
 app.post("/api/make-pdf", async (req, res) => {
   const body = req.body;
   const page = await browser.newPage();
@@ -68,7 +72,7 @@ const startup = async () => {
   });
   console.log(`Browser loaded`);
 
-  const PORT = 7071;
+  const PORT = 80;
   const HOST = "0.0.0.0";
 
   app.listen(PORT, HOST);
