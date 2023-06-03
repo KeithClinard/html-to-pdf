@@ -45,6 +45,7 @@ app.post("/api/make-pdf", async (req, res) => {
         bottom: "70px",
         left: "60px",
       },
+      timeout: 0,
     });
     await page.close();
   
