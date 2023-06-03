@@ -13,9 +13,10 @@ WORKDIR /usr/src/app
 
 COPY package*.json ./
 COPY index.js ./
+COPY auth.js ./
 
 RUN npm install
 
-EXPOSE 80
+EXPOSE 8080
 
 CMD [ "node", "index.js" ]
