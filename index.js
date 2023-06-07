@@ -7,7 +7,7 @@ let browser;
 
 app.use(authHandler);
 
-app.use(bodyParser.text({ type: "*/*", limit: "500mb" }));
+app.use(bodyParser.text({type: () => true, limit: "500mb" }));
 
 app.post("/api/make-pdf", async (req, res) => {
   const body = req.body;
