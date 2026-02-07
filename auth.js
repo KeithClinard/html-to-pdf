@@ -1,4 +1,4 @@
-module.exports = function (req, res, next) {
+export default function (req, res, next) {
   if (!process.env.API_KEY) {
     return next();
   }
@@ -10,4 +10,4 @@ module.exports = function (req, res, next) {
   res.status(401).json({
     error: "Valid API key required",
   });
-};
+}
