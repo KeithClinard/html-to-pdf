@@ -1,23 +1,12 @@
-const express = require("express");
-const puppeteer = require("puppeteer");
+import express from "express";
+import puppeteer from "puppeteer";
+import authHandler from "./auth.js";
+
 const app = express();
-const bodyParser = require("body-parser");
-const authHandler = require("./auth.js");
 let browser;
 
-app.use(authHandler);
-
-app.use(bodyParser.text({type: () => true, limit: "500mb" }));
-
-app.post("/api/make-pdf", async (req, res) => {
-  const body = req.body;
-  const page = await browser.newPage();
-  await page.setContent(body, {
-    waitUntil: "networkidle0",
-  });
-
-  const header = `<div style="display: none;"></div>`;
-  const footer = `<div
+const header = `<div style="display: none;"></div>`;
+const footer = `<div
   style="
     width: 100%;
     font-size: 6px;
@@ -31,6 +20,28 @@ app.post("/api/make-pdf", async (req, res) => {
   </div>
 </div>
 `;
+
+app.use(authHandler);
+
+app.use(express.text({ type: () => true, limit: "500mb" }));
+
+app.post("/api/make-pdf", async (req, res) => {
+  const body = req.body;
+
+  const page = await browser.newPage();
+
+  var bodyIsUrl = body.startsWith("http://") || body.startsWith("https://");
+
+  if (bodyIsUrl) {
+    await page.goto(body, {
+      waitUntil: "networkidle0",
+    });
+  } else {
+    await page.setContent(body, {
+      waitUntil: "networkidle0",
+    });
+  }
+  
   try {
     const pdf = await page.pdf({
       printBackground: true,
